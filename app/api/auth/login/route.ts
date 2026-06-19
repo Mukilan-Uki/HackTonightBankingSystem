@@ -1,22 +1,14 @@
-import { asText, serviceFailure, pool, runStatement, ensureDatabase } from "@/lib/platform-db";
+import { asText, serviceFailure, pool, ensureDatabase } from "@/lib/platform-db";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 
-export async function GET() {
-  try {
-    const result = await runStatement(
-      "SELECT id, username, role, full_name, nic, email FROM users ORDER BY id",
-    );
-
-    return Response.json({
-      ok: true,
-      note: "Login reference data.",
-      users: result.rows,
-    });
-  } catch (reason) {
-    return serviceFailure(reason);
-  }
-}
+// NOTE: a GET handler used to live here returning every user's id, username,
+// role, full_name, nic, and email with no authentication required at all
+// ("Login reference data"). NIC numbers are sensitive PII. It has been
+// removed — there is no legitimate unauthenticated use case for it, and the
+// frontend never called it. If an admin-facing user list is needed, build it
+// under /api/admin/* the same way app/api/admin/system/route.ts does, behind
+// a session.role === "admin" check.
 
 export async function POST(request: Request) {
   try {

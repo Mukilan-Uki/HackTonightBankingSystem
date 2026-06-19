@@ -1,28 +1,33 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { FormEvent, useState } from 'react'
 import AuthButton from '@/components/authButton'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [username, setUsername] = useState('')
+  const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError('')
 
-    if (!username.trim() || !password.trim()) {
-      setError('Please enter both username and password.')
+    if (!account.trim() || !password.trim()) {
+      setError('Please enter both account name and password.')
       return
     }
 
     setLoading(true)
-    router.push('/dashboard')
+    try {
+      // Replace with real auth logic when available.
+      router.push('/dashboard')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -53,7 +58,7 @@ export default function LoginPage() {
             LOGIN
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="relative">
               <label className="sr-only" htmlFor="login-account">
                 Account name
@@ -66,8 +71,8 @@ export default function LoginPage() {
               />
               <input
                 id="login-account"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
+                value={account}
+                onChange={(event) => setAccount(event.target.value)}
                 placeholder="Account name"
                 className="h-[64px] w-full rounded-[40px] border-0 bg-[#d9d9d9] px-8 pl-20 text-lg text-black shadow-[0_1px_3px_0_rgba(0,0,0,0.30),0_4px_8px_3px_rgba(0,0,0,0.15)] outline-none transition-shadow placeholder:text-black/45 focus:shadow-[0_4px_4px_0_rgba(0,0,0,0.30),0_8px_12px_6px_rgba(0,0,0,0.15)]"
               />

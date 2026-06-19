@@ -53,6 +53,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
+  const isProtected = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  )
+
+  if (isProtected && !isLoggedIn) {
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('next', rawPath)
+    return NextResponse.redirect(loginUrl)
+  }
+
   return NextResponse.next()
 }
 

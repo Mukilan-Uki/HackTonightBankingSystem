@@ -43,20 +43,46 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const q = asText(searchParams.get("q"));
-
     const pattern = `%${q}%`;
-    const sql = `
-      SELECT 'user' AS type, id::text, username AS label, email AS detail FROM users
-      WHERE username ILIKE $1 OR full_name ILIKE $1
-      UNION ALL
-      SELECT 'account' AS type, id::text, account_number AS label, account_name AS detail FROM accounts
-      WHERE account_number ILIKE $1 OR account_name ILIKE $1
-      UNION ALL
-      SELECT 'transaction' AS type, id::text, from_account || ' -> ' || to_account AS label, description AS detail FROM transactions
-      WHERE description ILIKE $1
-      LIMIT 25
-    `;
-    const result = await pool.query(sql, [pattern]);
+    const isAdmin = session.role === "admin";
+    const requesterId = Number(session.id);
+
+    // Non-admins only ever see their own user record, their own accounts,
+    // and transactions touching their own accounts. Previously this query
+    // had no ownership filter at all, so any logged-in customer could
+    // search and see every other customer's username/email, every
+    // account number/name in the bank, and every transaction description.
+    const sql = isAdmin
+      ? `
+        SELECT 'user' AS type, id::text, username AS label, email AS detail FROM users
+        WHERE username ILIKE $1 OR full_name ILIKE $1
+        UNION ALL
+        SELECT 'account' AS type, id::text, account_number AS label, account_name AS detail FROM accounts
+        WHERE account_number ILIKE $1 OR account_name ILIKE $1
+        UNION ALL
+        SELECT 'transaction' AS type, id::text, from_account || ' -> ' || to_account AS label, description AS detail FROM transactions
+        WHERE description ILIKE $1
+        LIMIT 25
+      `
+      : `
+        SELECT 'user' AS type, id::text, username AS label, email AS detail FROM users
+        WHERE id = $2 AND (username ILIKE $1 OR full_name ILIKE $1)
+        UNION ALL
+        SELECT 'account' AS type, id::text, account_number AS label, account_name AS detail FROM accounts
+        WHERE user_id = $2 AND (account_number ILIKE $1 OR account_name ILIKE $1)
+        UNION ALL
+        SELECT 'transaction' AS type, t.id::text, t.from_account || ' -> ' || t.to_account AS label, t.description AS detail
+        FROM transactions t
+        WHERE t.description ILIKE $1
+          AND (
+            t.from_account IN (SELECT account_number FROM accounts WHERE user_id = $2)
+            OR t.to_account IN (SELECT account_number FROM accounts WHERE user_id = $2)
+          )
+        LIMIT 25
+      `;
+
+    const params = isAdmin ? [pattern] : [pattern, requesterId];
+    const result = await pool.query(sql, params);
 
     return Response.json({
       ok: true,

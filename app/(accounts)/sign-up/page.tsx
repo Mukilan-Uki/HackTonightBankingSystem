@@ -1,37 +1,60 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import AuthButton from '@/components/authButton'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { FormEvent, useState } from 'react'
+import AuthButton from '@/components/authButton'
+
+const fields = [
+  { label: 'Account Number', name: 'accountNumber', type: 'text' },
+  { label: 'Account Name', name: 'accountName', type: 'text' },
+  { label: 'Branch', name: 'branch', type: 'text' },
+  { label: 'Email', name: 'email', type: 'text' },
+  { label: 'Password', name: 'password', type: 'password' },
+  { label: 'Confirm Password', name: 'confirmPassword', type: 'password' }
+]
 
 export default function SignUpPage() {
   const router = useRouter()
-  const [username, setUsername] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [branch, setBranch] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [form, setForm] = useState({
+    accountNumber: '',
+    accountName: '',
+    branch: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError('')
 
-    if (!username.trim() || !fullName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+    if (
+      !form.accountNumber.trim() ||
+      !form.accountName.trim() ||
+      !form.branch.trim() ||
+      !form.email.trim() ||
+      !form.password.trim() ||
+      !form.confirmPassword.trim()
+    ) {
       setError('Please fill out all fields.')
       return
     }
 
-    if (password !== confirmPassword) {
+    if (form.password !== form.confirmPassword) {
       setError('Passwords do not match.')
       return
     }
 
     setLoading(true)
-    router.push('/dashboard')
+    try {
+      // Replace with real signup logic when available.
+      router.push('/login')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -47,85 +70,35 @@ export default function SignUpPage() {
           SIGN UP
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-username">
-              Username :
-            </label>
-            <input
-              id="sign-up-username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          {fields.map(({ label, name, type }) => {
+            const fieldId = `sign-up-${label.toLowerCase().replaceAll(' ', '-')}`
 
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-full-name">
-              Full Name :
-            </label>
-            <input
-              id="sign-up-full-name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
+            return (
+              <div
+                className="grid items-center gap-4 md:grid-cols-[180px_1fr]"
+                key={name}
+              >
+                <label className="text-xl text-black" htmlFor={fieldId}>
+                  {label} :
+                </label>
+                <input
+                  id={fieldId}
+                  type={type}
+                  value={form[name as keyof typeof form]}
+                  onChange={(event) =>
+                    setForm((current) => ({
+                      ...current,
+                      [name]: event.target.value
+                    }))
+                  }
+                  className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
+                />
+              </div>
+            )
+          })}
 
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-branch">
-              Branch :
-            </label>
-            <input
-              id="sign-up-branch"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
-
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-email">
-              Email :
-            </label>
-            <input
-              id="sign-up-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
-
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-password">
-              Password :
-            </label>
-            <input
-              id="sign-up-password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
-
-          <div className="grid items-center gap-4 md:grid-cols-[180px_1fr]">
-            <label className="text-xl text-black" htmlFor="sign-up-confirm-password">
-              Confirm Password :
-            </label>
-            <input
-              id="sign-up-confirm-password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="h-[64px] rounded-[40px] border-0 bg-[#d9d9d9] px-7 text-lg text-black outline-none"
-            />
-          </div>
-
-          {error ? (
-            <p className="text-center text-sm text-red-600">{error}</p>
-          ) : null}
+          {error ? <p className="text-center text-sm text-red-600">{error}</p> : null}
 
           <div className="mt-8 flex justify-center">
             <AuthButton type="submit" className="w-full max-w-[280px]" disabled={loading}>
