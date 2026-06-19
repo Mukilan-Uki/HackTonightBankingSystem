@@ -1,0 +1,39 @@
+{
+  "name": "hack-to-night-2026-challenge",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "next": "16.2.9",
+    "pg": "^8.22.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.16",
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^20.19.43",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "lefthook": "^2.1.9",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5.9.3"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}

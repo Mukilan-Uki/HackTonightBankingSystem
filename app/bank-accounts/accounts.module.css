@@ -1,0 +1,493 @@
+/* Root variables moved to app/globals.css */
+
+/* ===== GLOBAL STYLES ===== */
+.accountsPage {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  overflow: hidden;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  flex: 1;
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ===== HEADER ===== */
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.pageTitle {
+  font-size: var(--font-4xl);
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.avatarPlaceholder {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--color-avatar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarPlaceholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== CARDS CONTAINER ===== */
+.cardsContainer {
+  margin-top: var(--spacing-3xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xl);
+}
+
+/* ===== ACCOUNT CARD ===== */
+.accountCard {
+  width: var(--card-width);
+  max-width: 100%;
+  height: var(--card-height);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px var(--color-shadow);
+  border: 2px solid var(--color-card-border);
+  position: relative;
+  transition: var(--transition-default);
+}
+
+.accountCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px -1px var(--color-shadow);
+}
+
+.iconEdit,
+.iconDelete {
+  position: absolute;
+  font-size: var(--font-xl);
+  cursor: pointer;
+  transition: var(--transition-default);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+
+.iconEdit {
+  left: var(--spacing-lg);
+  top: var(--spacing-lg);
+  color: var(--color-black);
+}
+
+.iconEdit:hover {
+  background: var(--color-hover-bg);
+  transform: scale(1.1);
+}
+
+.iconDelete {
+  right: var(--spacing-lg);
+  bottom: var(--spacing-lg);
+  color: var(--color-black);
+}
+
+.iconDelete:hover {
+  background: var(--color-delete-hover);
+  transform: scale(1.1);
+}
+
+.accountCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--spacing-lg);
+}
+
+.accountName {
+  font-weight: 700;
+  font-size: var(--font-xl);
+  margin: 0;
+  color: var(--color-black);
+}
+
+.accountAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  margin-top: var(--spacing-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accountAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.accountDetails {
+  font-size: var(--font-sm);
+  margin-top: var(--spacing-sm);
+  color: var(--color-black);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ===== ADD ACCOUNT CARD ===== */
+.addAccountCard {
+  width: var(--card-width);
+  max-width: 100%;
+  height: 170px;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px var(--color-shadow);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-default);
+  font-family: inherit;
+}
+
+.addAccountCard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 15px -3px var(--color-shadow-hover);
+}
+
+.addAccountCard:active {
+  transform: scale(0.98);
+}
+
+.addAccountTitle {
+  font-weight: 600;
+  font-size: var(--font-xl);
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-black);
+}
+
+.addAccountIcon {
+  font-size: var(--font-4xl);
+  font-weight: 300;
+  color: var(--color-black);
+}
+
+/* ===== FORM CONTAINER ===== */
+.formContainer {
+  margin-top: var(--spacing-2xl);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.formCard {
+  width: var(--form-width);
+  max-width: 100%;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px var(--color-shadow);
+  padding: var(--spacing-2xl);
+}
+
+.formHeader {
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border-light);
+}
+
+.formTitle {
+  font-size: var(--font-3xl);
+  font-weight: 600;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* ===== FORM GROUP ===== */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  position: relative;
+}
+
+.formGroup label {
+  font-weight: 500;
+  font-size: var(--font-md);
+  color: var(--color-text);
+}
+
+.formGroup input {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-md);
+  transition: var(--transition-default);
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  color: var(--color-text);
+}
+
+.formGroup input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.formGroup input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.inputDisabled {
+  background: var(--color-hover-bg);
+  color: var(--color-text-light);
+  cursor: not-allowed;
+}
+
+.inputDisabled:focus {
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+
+/* ===== VALIDATION STYLES ===== */
+.inputError {
+  border-color: var(--color-error) !important;
+}
+
+.inputError:focus {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px var(--color-error-light) !important;
+}
+
+.fieldError {
+  color: var(--color-error);
+  font-size: var(--font-sm);
+  margin-top: var(--spacing-xs);
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== FORM ACTIONS ===== */
+.formActionsBottom {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 2px solid var(--color-border-light);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.btnCancel,
+.btnAdd,
+.btnUpdate {
+  padding: 0.7rem var(--spacing-2xl);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: var(--font-md);
+  cursor: pointer;
+  transition: var(--transition-default);
+  min-width: 120px;
+}
+
+.btnCancel {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.btnCancel:hover {
+  background: #d1d5db;
+  transform: scale(1.02);
+}
+
+.btnAdd {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btnAdd:hover {
+  background: var(--color-primary-hover);
+  transform: scale(1.02);
+  box-shadow: 0 4px 6px -1px rgba(69, 0, 67, 0.3);
+}
+
+.btnAdd:active {
+  transform: scale(0.98);
+}
+
+.btnUpdate {
+  background: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btnUpdate:hover {
+  background: var(--color-secondary-hover);
+  transform: scale(1.02);
+  box-shadow: 0 4px 6px -1px var(--color-secondary-light);
+}
+
+.btnUpdate:active {
+  transform: scale(0.98);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .accountsPage {
+    flex-direction: column;
+  }
+
+  .content {
+    padding: var(--spacing-lg);
+  }
+
+  .formCard {
+    padding: var(--spacing-xl);
+  }
+
+  .formActionsBottom {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .btnCancel,
+  .btnAdd,
+  .btnUpdate {
+    width: 100%;
+    text-align: center;
+    padding: 0.6rem;
+    min-width: unset;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .content {
+    padding: var(--spacing-lg);
+  }
+
+  .contentHeader {
+    gap: var(--spacing-md);
+  }
+
+  .headerActions {
+    gap: var(--spacing-md);
+  }
+
+  .accountCard {
+    height: var(--card-height);
+  }
+
+  .addAccountCard {
+    height: 140px;
+  }
+
+  .accountAvatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .formCard {
+    padding: var(--spacing-lg);
+  }
+
+  .formGroup input {
+    padding: 0.6rem 0.75rem;
+    font-size: var(--font-sm);
+  }
+
+  .fieldError {
+    font-size: var(--font-xs);
+  }
+
+  .iconEdit,
+  .iconDelete {
+    font-size: var(--font-lg);
+    padding: 2px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 360px) {
+  .accountAvatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .addAccountIcon {
+    font-size: var(--font-3xl);
+  }
+
+  .formCard {
+    padding: var(--spacing-md);
+  }
+
+  .formTitle {
+    font-size: var(--font-lg);
+  }
+
+  .btnCancel,
+  .btnAdd,
+  .btnUpdate {
+    font-size: var(--font-sm);
+    padding: 0.5rem;
+  }
+}
+
+/* Large Screens */
+@media (min-width: 1200px) {
+  .cardsContainer {
+    gap: var(--spacing-3xl);
+  }
+
+  .accountAvatar {
+    width: 120px;
+    height: 120px;
+  }
+}
